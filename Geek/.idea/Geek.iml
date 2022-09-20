@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/Demo/11_Flutter_lifecycle/build" />
+      <excludeFolder url="file://$MODULE_DIR$/Demo/11_Flutter_lifecycle/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/Demo/11_Flutter_lifecycle/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/part4_timer/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/part4_timer/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/part4_timer/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
