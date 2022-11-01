@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,15 +15,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Base UI',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.orange,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -46,7 +39,130 @@ class MyHomePage extends StatefulWidget {
   @override
   // State<MyHomePage> createState() => _MyHomePageState();
   // State<MyHomePage> createState() => _TextState();
-  State<MyHomePage> createState() => _TextSpan();
+  // State<MyHomePage> createState() => _TextSpan();
+  // State<MyHomePage> createState() => _Button();
+  State<MyHomePage> createState() => _TableView();
+}
+
+class _Scroll extends State<MyHomePage> {
+
+  late ScrollController _controller;
+  bool isToTop = false;
+   @override
+  void initState() {
+    // TODO: implement initState
+    _controller = ScrollController();
+    _controller.addListener(() {
+      if(_controller.offset > 1000) {// 如果 ListView 已经向下滚动了 1000，则启用 Top 按钮
+        setState(() {isToTop = true;});
+      } else if(_controller.offset < 300) {// 如果 ListView 向下滚动距离不足 300，则禁用 Top 按钮
+        setState(() {isToTop = false;});
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+
+    );
+  }
+
+}
+
+
+class _TableView extends State<MyHomePage> {
+
+  final ListView simpleList = ListView(
+      children: const <Widget>[
+        ListTile(leading: Icon(Icons.map), title: Text("Map")),
+        ListTile(leading: Icon(Icons.mail), title: Text("Mail")),
+        ListTile(leading: Icon(Icons.message), title: Text("Message"))
+  ]);
+
+  final ListView horizontalList = ListView(
+    scrollDirection: Axis.horizontal,
+    itemExtent: 80,
+    children: <Widget>[
+      Container(color: Colors.blue,),
+      Container(color: Colors.red,),
+      Container(color: Colors.pink,),
+      Container(color: Colors.yellow,),
+      Container(color: Colors.black,),
+      Container(color: Colors.grey,),
+      Container(color: Colors.purple,),
+      Container(color: Colors.green,),
+    ],
+  );
+
+  final ListView builderList = ListView.builder(
+      itemCount: 100,
+      itemExtent: 64,
+      itemBuilder: (BuildContext context, int index) => ListTile(title: Text("title $index"), subtitle: Text("body $index"))
+  );
+
+  final ListView separatedList = ListView.separated(
+      itemBuilder:
+          (BuildContext context, int index) =>
+              ListTile(title: Text("title $index"), subtitle: Text("body $index")),
+      separatorBuilder: (BuildContext context, int index) =>
+              index % 2 == 0 ? const Divider(color: Colors.green) : const Divider(color: Colors.red),
+      itemCount: 50);
+
+  final CustomScrollView scrollView = CustomScrollView(
+    slivers: [
+      SliverAppBar(
+        title: Text("CustomScrollView demo"),
+        floating: true,// 设置悬浮样式
+        flexibleSpace: Image.network("https://t7.baidu.com/it/u=1501242951,184012308&fm=193", fit: BoxFit.cover,),
+        expandedHeight: 300,
+      ),
+      SliverList(delegate: SliverChildBuilderDelegate(
+          (context, index) => ListTile(title: Text('Item #$index')),
+        childCount: 80,
+      ))
+    ],
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(appBar: AppBar(
+      title: Text("TableView"),
+    ),
+    body: scrollView);
+  }
+
+}
+
+
+class _Button extends State<MyHomePage> {
+
+  final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+    foregroundColor: Colors.grey[300], minimumSize: Size(88, 36),
+    padding: EdgeInsets.symmetric(horizontal: 16.0),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Button Demo"),
+      ),
+      body: TextButton(
+        style: flatButtonStyle,
+        onPressed: () => print("Click..."),
+        child: Text('TextButton'),
+      ),
+    );
+  }
+
 }
 
 class _TextSpan extends State<MyHomePage> {
